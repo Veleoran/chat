@@ -1,0 +1,16 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "Création d’un Chat avec Socket.io",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Veleoran/chat.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "e1m1",
+  "license": "ISC"
+}
+
