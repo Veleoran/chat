@@ -1,0 +1,161 @@
+<!-- ./public/index.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Super Chat</title>
+    <style>
+    #body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      height: 100vh;
+      align-items: center;
+      background-color: #f7f7f7;
+    }
+    #chat {
+      display: none; /* Masqué par défaut */
+      border: 1px solid #ccc;
+      background: #fff;
+      border-radius: 5px;
+      padding: 20px;
+      width: 80%;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    #sidebar {
+      width: 200px;
+      margin-right: 20px;
+    }
+    #sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    #sidebar ul li {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+    #userList {
+      list-style: none;
+      padding: 0;
+    }
+    #userList li {
+      padding: 5px;
+      border-bottom: 1px solid #ddd;
+    }
+    #messageArea {
+      margin-bottom: 10px;
+    }
+    #messageInput {
+      width: calc(100% - 110px);
+      padding: 10px;
+      margin-right: 10px;
+    }
+    #sendMessage {
+      width: 100px;
+      padding: 10px;
+    }
+    #connect {
+          background-color: #000; /* Couleur de fond noire */
+          color: #fff; /* Texte en blanc */
+          padding: 10px 20px; /* Espacement intérieur */
+          border: none; /* Pas de bordure */
+          text-align: center; /* Texte centré */
+          font-size: 16px; /* Taille de la police */
+          border-radius: 5px; /* Bordures arrondies */
+          cursor: pointer; /* Curseur en forme de pointeur */
+          box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2); /* Ombre légère pour donner du relief */
+          text-decoration: none; /* Pas de soulignement */
+          display: inline-block; /* Affichage en ligne */
+      }
+      #connect:hover {
+          background-color: #333; /* Couleur de fond plus claire au survol */
+      }
+        #login {
+            box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Ombre de la boîte */
+            border-radius: 5px; /* Bordures arrondies */
+            padding: 20px; /* Espacement intérieur */
+            background-color: #fff; /* Fond blanc pour la boîte de connexion */
+            width: 300px; /* Largeur de la boîte de connexion */
+        }
+        #pseudo {
+            width: 100%; /* Largeur complète */
+            padding: 10px; /* Espacement intérieur */
+            margin-bottom: 10px; /* Marge en dessous du champ de saisie */
+            border: 1px solid #ddd; /* Bordure du champ de saisie */
+            border-radius: 5px; /* Bordures arrondies */
+        }
+        #app {
+      display: flex; /* Ajouté pour une mise en page côte à côte */
+      max-width: 1200px; /* Limite la largeur pour un meilleur design */
+      margin-top: 50px; /* Ajouté pour pousser le contenu vers le bas */
+    }
+    aside#sidebar {
+      flex: 0 0 200px; /* Ajouté pour définir une largeur fixe pour la barre latérale */
+      margin-right: 20px; /* Ajusté l'espacement */
+      background: #fff; /* Fond blanc pour la distinction */
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    section#chat-area {
+      flex: 1; /* Ajouté pour prendre l'espace restant */
+    }
+        button#connect {
+            width: 100%; /* Largeur complète */
+            padding: 10px; /* Espacement intérieur */
+            border: none; /* Pas de bordure */
+            background-color: #333; /* Couleur de fond */
+            color: white; /* Texte en blanc */
+            border-radius: 5px;
+        }
+      </style>
+</head>
+<body>
+    
+    <template id="userItemTemplate">
+        <li class="user-item"></li>
+      </template>
+      <div id="app">
+        <aside id="sidebar">
+          <div id="channels">
+            <h2>Les channels</h2>
+            <ul>
+              <li>Général</li>
+              <li>Programmation</li>
+              <li>Jeux Vidéo</li>
+            </ul>
+          </div>
+          <div id="users">
+            <h2>Les utilisateurs</h2>
+            <ul id="userList"></ul>
+          </div>
+        </aside>
+        <section id="chat-area">
+          <div id="chat">
+            <div id="messageArea"><!-- Ici s'afficheront les messages --></div>
+            <input type="text" id="messageInput" placeholder="Tapez votre message ici">
+            <button id="sendMessage">Envoyer</button>
+            <button id="disconnect">Se déconnecter</button>
+              <ul id="users"></ul>
+          </div>
+        </section>
+      </div>
+   
+
+    <div id="login">
+      <input type="text" id="pseudo" placeholder="Choisissez un pseudo">
+      <button id="connect">Se connecter sans s'authentifier</button>
+    </div>
+    <!-- <div id="chat">
+        <div id="messageArea"><!-- Ici s'afficheront les messages --></div>
+        <input type="text" id="messageInput" placeholder="Tapez votre message ici">
+        <button id="sendMessage">Envoyer</button>
+      </div> -->
+      
+<!-- <script src="/scripts/main.js" type="module"></script> -->
+<script type="module" src="/scripts/ChatClient.js"></script>
+</#body>
+</html>

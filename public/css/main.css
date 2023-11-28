@@ -1,0 +1,17 @@
+.button-style {
+    background-color: #000; /* Couleur de fond noire */
+    color: #fff; /* Texte en blanc */
+    padding: 10px 20px; /* Espacement intérieur */
+    border: none; /* Pas de bordure */
+    text-align: center; /* Texte centré */
+    font-size: 16px; /* Taille de la police */
+    border-radius: 5px; /* Bordures arrondies */
+    cursor: pointer; /* Curseur en forme de pointeur */
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2); /* Ombre légère pour donner du relief */
+    text-decoration: none; /* Pas de soulignement */
+    display: inline-block; /* Affichage en ligne */
+}
+
+.button-style:hover {
+    background-color: #333; /* Couleur de fond plus claire au survol */
+}
