@@ -1,0 +1,19 @@
+#ui_chat {
+    background: #ccc;
+    height: 500px;
+}
+#ui_chat_messages {
+    background: #eee;
+}
+h3 { font-size: 1.2rem;}
+
+.hide { display : none; }
+.noAuthenticated {
+    text-align:center;
+    margin-top:50px;
+}
+#listingUsers, #listingChannels { list-style: none; padding: 0;}
+
+#listingChannels li.active {
+    background:#999;
+}
