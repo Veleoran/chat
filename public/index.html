@@ -55,6 +55,12 @@
         </tr>
     </template>
     <script src="/socket.io/socket.io.min.js"></script>
-    <script src="/scripts/main.js" type="module"></script>
+    <script src="/scripts/ChatClient.js"></script>
+<script>
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        new ChatClient(document.location.host);
+    });
+</script>
 </body>
 </html>
