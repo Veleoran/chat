@@ -29,13 +29,19 @@ class ChatClient {
             });
         });
         this.socket.on('server:channel:messages', (messages) => {
-            const listing = document.querySelector('listingMessages');
-            listing.innerHTML = "";
-            messages.forEach(msg => {
-                this.addMessageToList(msg);
-
-            })
+            const listing = document.querySelector('#listingMessages');
+            console.log(listing); // Affichage pour débogage
+            if (listing) {
+                listing.innerHTML = "";
+                messages.forEach(msg => {
+                    this.addMessageToList(msg);
+                });
+            } else {
+                console.error("L'élément listingMessages n'a pas été trouvé.");
+            };
+        
             this.socket.on('server:user:typing', (data) => {
+                console.log(`${data.pseudo} est en train de taper...`);
                 const typingDisplay = document.querySelector('#typingDisplay');
                 typingDisplay.textContent = `${data.pseudo} est en train de taper...`;
                 setTimeout(() => { typingDisplay.textContent = ''; }, 3000); // Effacer après un délai
@@ -49,7 +55,7 @@ class ChatClient {
                 this.socket.emit('client:typing', { pseudo: this.pseudo, channel: this.currentChannel });
             }
         });
-        
+       
     }
     // 
     displayChannels(channels) {
@@ -110,6 +116,13 @@ class ChatClient {
         });
     
         this.socket.emit('client:joinChannel', channelName);
+        this.currentChannel = channelName; 
+        const listingMessages = document.querySelector('#listingMessages');
+        if (listingMessages) {
+            listingMessages.innerHTML = '';
+        } else {
+            console.error("L'élément listingMessages n'a pas été trouvé lors du changement de channel.");
+        }
     }
     
     displayChannels(channels) {

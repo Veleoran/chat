@@ -39,6 +39,7 @@ export default class ChatServer {
                 this.io.to(channelName).emit('server:message', { pseudo: socket.pseudo, message });
             });
             socket.on('client:typing', (data) => {
+                console.log(`User Typing: ${data.pseudo} in ${data.channel}`);
                 socket.to(data.channel).emit('server:user:typing', { pseudo: data.pseudo });
             });
           
