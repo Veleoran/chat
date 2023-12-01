@@ -1,9 +1,9 @@
 // Chat.js
 import http from 'http';
-import path from 'path';
 import serveStatic from 'serve-static';
 import finalhandler from 'finalhandler';
 import { Server as SocketIOServer } from 'socket.io';
+import Channel from './Channel.js';
 
 
 
@@ -13,6 +13,11 @@ export default class ChatServer {
         this.port = port;
         this.users = [];
         this.serve = serveStatic(publicPath, { index: 'index.html' });
+        this.channels = {
+            "Général": new Channel("Général"),
+            "Programmation": new Channel("Programmation"),
+            "Jeux Vidéo": new Channel("Jeux Vidéo")
+        };
 
         this.httpServer = http.createServer((req, res) =>
             this.serve(req, res, finalhandler(req, res))
@@ -28,10 +33,35 @@ export default class ChatServer {
             socket.on('client:user:connect', pseudo => this.connectUser(socket, pseudo));
             socket.on('client:user:disconnect', () => this.disconnectUser(socket));
             socket.on('client:message', (message) => {
-                // Renvoyer le message à tous les sockets connectés, y compris à celui qui l'a envoyé
-                const data = { pseudo: socket.pseudo, message: message };
-                this.io.emit('server:message', data);
+                const channelName = socket.channel || 'Général'; // Assurez-vous que l'utilisateur est dans un channel
+                const channel = this.channels[channelName];
+                channel.addMessage({ pseudo: socket.pseudo, message });
+                this.io.to(channelName).emit('server:message', { pseudo: socket.pseudo, message });
             });
+            socket.on('client:typing', (data) => {
+                socket.to(data.channel).emit('server:user:typing', { pseudo: data.pseudo });
+            });
+          
+            socket.on('client:joinChannel', (channelName) => {
+                if (this.channels[channelName]) {
+                    const oldChannel = socket.channel;
+                    socket.leave(oldChannel);
+                    socket.join(channelName);
+                    socket.channel = channelName;
+            
+                    // Envoyer une notification aux autres utilisateurs du channel
+                    this.io.to(channelName).emit('server:message', {
+                        pseudo: 'System',
+                        message: `${socket.pseudo} a rejoint le channel ${channelName}`
+                    });
+                    // socket.on('client:typing', (data) => {
+                    //     socket.to(data.channel).emit('server:user:typing', { pseudo: data.pseudo });
+                    // });
+            
+                    socket.emit('server:channel:messages', this.channels[channelName].messages);
+                }
+            });
+            
             socket.on('disconnect', () => {
                 this.disconnectUser(socket);
             });
@@ -45,8 +75,12 @@ export default class ChatServer {
         } else {
             this.users.push(pseudo);
             socket.pseudo = pseudo;
+            socket.join('Général');
+            socket.channel = 'Général';
             socket.emit("server:user:connected")
             this.io.emit('server:user:list', this.users)
+            socket.emit("server:channels:list", Object.keys(this.channels));
+
         }
     }
 

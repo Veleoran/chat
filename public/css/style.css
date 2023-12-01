@@ -5,6 +5,11 @@
 #ui_chat_messages {
     background: #eee;
 }
+#userDisplay {
+    color: #000;
+    margin-right: 10px;
+}
+
 h3 { font-size: 1.2rem;}
 
 .hide { display : none; }
@@ -15,5 +20,21 @@ h3 { font-size: 1.2rem;}
 #listingUsers, #listingChannels { list-style: none; padding: 0;}
 
 #listingChannels li.active {
+    font-weight: bold;
     background:#999;
 }
+.message-time {
+    color: #888;
+    font-size: 0.8em;
+    margin-right: 10px;
+}
+
+.message-author {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.message-content {
+    color: #333;
+}
+
